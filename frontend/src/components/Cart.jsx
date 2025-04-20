@@ -1,0 +1,107 @@
+import React, { useEffect, useState } from "react";
+import axios from "../utils/axiosInstance";
+import CartItem from "./CartItem";
+import { updateCartItemApi, removeCartItemApi } from "../api/cartAPI";
+import { useNavigate, Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
+import toast from "react-hot-toast";
+
+const CartPage = () => {
+  const [cart, setCart] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const fetchCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:5000/api/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCart(response.data);
+    } catch (err) {
+      console.error("Error fetching cart:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  const notifyHeader = () => {
+    window.dispatchEvent(new CustomEvent("cartUpdated"));
+  };
+
+  const updateQuantity = async (productId, newQty) => {
+    if (newQty < 1) return;
+    try {
+      const updatedCart = await updateCartItemApi(productId, newQty);
+      setCart(updatedCart);
+      notifyHeader();
+    } catch (err) {
+      console.error("Error updating quantity:", err);
+    }
+  };
+
+  const removeItem = async (productId) => {
+    try {
+      const updatedCart = await removeCartItemApi(productId);
+      setCart(updatedCart.cart);
+      notifyHeader();
+    } catch (err) {
+      console.error("Error removing item:", err);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete("http://localhost:5000/api/cart/clear", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCart(response.data.cart);
+      toast.success("Your cart has been cleared!");
+      notifyHeader();
+    } catch (err) {
+      console.error("Error clearing cart:", err);
+      toast.error("Failed to clear cart. Please try again.");
+    }
+  };
+
+  const totalPrice = cart?.items?.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  if (loading) return <div className="text-center mt-10 text-xl text-gray-600">Loading your cart...</div>;
+
+  return (
+    <div className="container mx-auto px-4 py-8 min-h-screen flex flex-col items-center bg-gray-50">
+      <h2 className="text-4xl font-extrabold text-gray-800 mb-10">Your Shopping Cart 🛒</h2>
+
+      {!cart || cart.items.length === 0 ? (
+        <div className="flex flex-col items-center justify-center text-center space-y-6 bg-white p-10 rounded-xl shadow-lg">
+          <FaShoppingCart className="text-5xl text-gray-400" />
+          <p className="text-gray-500 text-lg font-semibold">Your cart is empty. Start shopping now!</p>
+          <Link to="/" className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-md transform hover:scale-105">🛍️ Start Shopping</Link>
+        </div>
+      ) : (
+        <div className="space-y-6 w-full max-w-3xl">
+          {cart.items.map((item) => (
+            <CartItem key={item.productId} item={item} onUpdateQuantity={updateQuantity} onRemoveItem={removeItem} />
+          ))}
+
+          <div className="mt-8 p-6 bg-white rounded-xl shadow-lg w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-2xl font-bold text-gray-800">Cart Total</h3>
+              <span className="text-2xl font-bold text-green-600">₹{totalPrice?.toFixed(2)}</span>
+            </div>
+            <button onClick={clearCart} className="w-full bg-red-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-red-700 transition duration-300 transform hover:scale-105 mb-4">🗑️ Clear Cart</button>
+            <button onClick={() => navigate("/checkout")} className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 transform hover:scale-105">✅ Proceed to Checkout</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+export default CartPage;
