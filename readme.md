@@ -101,9 +101,7 @@ cd backend
 npm install
 npm start
 
-🙌 Author
+Author
 Harshit – 
-•LinkedIn 
-https://www.linkedin.com/in/harshit-sharma-b93192199/  
-•GitHub  
-https://github.com/sharmaHarshit2000
+[LinkedIn](https://www.linkedin.com/in/harshit-sharma-b93192199/)
+[GitHub](https://github.com/sharmaHarshit2000/)
