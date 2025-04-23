@@ -12,10 +12,11 @@ A full-stack e-commerce app with product listings, cart functionality, and user 
 - Browse products
 - Add to cart (protected route)
 - Dynamic cart count & user info
-- Protected Checkout Route
+- Protected checkout route
 
 ## 🔧 Folder Structure
 
+```plaintext
 shoppyglobe/
 ├── backend/
 │   ├── config/
@@ -81,13 +82,8 @@ shoppyglobe/
 │   └── package-lock.json
 │
 └── README.md
-   
 
 
-
-## 📦 Installation
-
-```bash
 # Clone the repository
 git clone https://github.com/sharmaHarshit2000/shoppyglobe-fullStack.git
 cd shoppyglobe-fullStack
@@ -102,11 +98,8 @@ cd backend
 npm install
 npm start
 
-
-
 👤 Author
 Harshit Sharma
 
 LinkedIn: https://www.linkedin.com/in/harshit-sharma-b93192199/
 GitHub: https://github.com/sharmaHarshit2000/
-
