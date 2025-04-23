@@ -87,10 +87,11 @@ shoppyglobe/
 
 ## 📦 Installation
 
+```bash
+# Clone the repository
 git clone https://github.com/sharmaHarshit2000/shoppyglobe-fullStack.git
 cd shoppyglobe-fullStack
 
-```bash
 # Frontend
 cd frontend
 npm install
@@ -100,6 +101,8 @@ npm run dev
 cd backend
 npm install
 npm start
+
+
 
 ## Author
 
