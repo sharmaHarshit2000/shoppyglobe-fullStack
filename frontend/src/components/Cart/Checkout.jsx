@@ -1,53 +1,84 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "../../utils/axiosInstance";
 import { FaCreditCard, FaPaypal, FaMoneyBillWaveAlt } from "react-icons/fa";
-import { useState } from "react";
-import { clearCart } from "../redux/cartSlice";
+import { useAuth } from "../../context/AuthContext";
 
 function Checkout() {
-    const dispatch = useDispatch();
-    const cartItems = useSelector((state) => state.cart.items);
-
-    // Calculate total price from cart items
-    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    // State for form input values
+    const { token } = useAuth();
+    const [cartItems, setCartItems] = useState([]);
+    const [orderPlaced, setOrderPlaced] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         address: "",
         city: "",
         zip: "",
-        paymentMethod: "Credit Card", // Default selected payment method
+        paymentMethod: "Credit Card",
     });
 
-    const [orderPlaced, setOrderPlaced] = useState(false); // Flag to check if order is placed
+    // Fetch cart data from backend
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const response = await axios.get("http://localhost:5000/api/cart", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
-    // Update form data on input change
-    function handleChange(e) {
+                setCartItems(response.data.items); // 👈 FIX: only set the array of items
+            } catch (error) {
+                console.error("Failed to fetch cart:", error);
+            }
+        };
+
+        if (token) fetchCart();
+    }, [token]);
+
+
+    const totalPrice = cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+    );
+
+    const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    };
 
-    // Handle form submission
-    function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Check if any form field is empty
+    
         if (Object.values(formData).some((field) => field.trim() === "")) {
             alert("Please fill all fields before placing the order");
             return;
         }
-
-        // Place the order and clear the cart
-        setOrderPlaced(true);
-        dispatch(clearCart());
-    }
-
+    
+        try {
+            setOrderPlaced(true); // Show success message
+    
+            // Clear cart in backend
+            await axios.delete("http://localhost:5000/api/cart/clear", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            setCartItems([]); // Clear frontend state
+    
+            // 🔥 Trigger cart count update in Header
+            window.dispatchEvent(new Event("cartUpdated"));
+        } catch (error) {
+            console.error("Error placing order or clearing cart:", error);
+            alert("Failed to place order or clear cart.");
+        }
+    };
+    
+    
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-10 px-4">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-4xl font-extrabold text-center mb-10 text-blue-700">🛒 Checkout</h2>
 
-                {/* Show confirmation message if order is placed */}
                 {orderPlaced ? (
                     <div className="text-center bg-green-100 p-10 rounded-2xl shadow-xl">
                         <h3 className="text-3xl font-bold text-green-700 mb-4">Order Successfully Placed!</h3>
@@ -55,7 +86,6 @@ function Checkout() {
                         <div className="text-green-600 text-6xl mt-6 animate-bounce">✅</div>
                     </div>
                 ) : (
-                    
                     <div className="bg-white shadow-xl rounded-2xl p-8">
                         <h3 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Shipping Information</h3>
                         <form onSubmit={handleSubmit} className="space-y-5">
@@ -167,7 +197,7 @@ function Checkout() {
                             <h3 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">🧾 Order Summary</h3>
                             <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
                                 {cartItems.map((item) => (
-                                    <div key={item.id} className="flex justify-between text-gray-700 border-b pb-2">
+                                    <div key={item._id} className="flex justify-between text-gray-700 border-b pb-2">
                                         <span>{item.title} (x{item.quantity})</span>
                                         <span>${(item.price * item.quantity).toFixed(2)}</span>
                                     </div>

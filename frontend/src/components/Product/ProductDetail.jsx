@@ -1,9 +1,9 @@
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
-import axios from "../utils/axiosInstance";
+import axios from "../../utils/axiosInstance";
 
 function ProductDetail() {
     const { id } = useParams();

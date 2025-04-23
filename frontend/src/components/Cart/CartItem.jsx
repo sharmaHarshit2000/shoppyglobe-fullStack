@@ -18,7 +18,7 @@ function CartItem({ item, onUpdateQuantity, onRemoveItem }) {
                     <h3 className="text-lg font-semibold text-gray-900 max-w-[180px] sm:max-w-none truncate">
                         {item.title}
                     </h3>
-                    <p className="text-gray-600 font-medium">₹{item.price}</p>
+                    <p className="text-gray-600 font-medium">${item.price}</p>
                 </div>
             </div>
 
@@ -28,7 +28,7 @@ function CartItem({ item, onUpdateQuantity, onRemoveItem }) {
                 <div className="flex items-center gap-2 sm:gap-3">
                     <button
                         onClick={() => onUpdateQuantity(item.productId, item.quantity - 1)}
-                        className="bg-gray-500 text-white px-2 sm:px-3 py-2 rounded-l hover:bg-gray-600 transition duration-300"
+                        className="bg-gray-500 text-white px-2 sm:px-3 py-2 rounded-l hover:bg-gray-600 transition duration-300 transform hover:scale-110"
                     >
                         <FaMinus />
                     </button>

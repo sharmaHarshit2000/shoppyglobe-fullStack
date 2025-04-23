@@ -1,10 +1,9 @@
 import { useState } from "react";
 import ProductItem from "./ProductItem";
-import useFetch from "../hooks/useFetch";
-import LoadingSpinner from "./LoadingSpinner";
+import useFetch from "../../hooks/useFetch";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 function ProductList() {
-    // ✅ Corrected API URL (removed extra 'https://')
     const { loading, error, data } = useFetch("http://localhost:5000/api/products");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -23,10 +22,7 @@ function ProductList() {
         );
     }
 
-    // ✅ Guard in case `data` is undefined, and handle the case where `data` might be an array directly
     const allProducts = Array.isArray(data) ? data : [];
-
-    // ✅ Filter products based on search input
     const filteredProducts = allProducts.filter((product) =>
         product.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -54,16 +50,21 @@ function ProductList() {
                 />
             </div>
 
-            {/* Product Grid */}
-            {filteredProducts.length > 0 ? (
+            {/* Product Grid or Message */}
+            {allProducts.length === 0 ? (
+                <div className="text-center text-gray-600 text-xl font-semibold py-10 bg-yellow-50 rounded-xl shadow">
+                    🛍️ No products available right now.<br />
+                    Please check back later!
+                </div>
+            ) : filteredProducts.length === 0 ? (
+                <div className="text-center text-gray-500 font-medium text-lg">
+                    No products found matching "<span className="font-bold">{searchQuery}</span>"
+                </div>
+            ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {filteredProducts.map((product) => (
                         <ProductItem key={product._id || product.id} product={product} />
                     ))}
-                </div>
-            ) : (
-                <div className="text-center text-gray-500 font-medium text-lg">
-                    No products found matching "<span className="font-bold">{searchQuery}</span>"
                 </div>
             )}
         </div>
