@@ -104,9 +104,7 @@ npm start
 
 
 
-## Author
-
-**Harshit**  
-[LinkedIn](https://www.linkedin.com/in/harshit-sharma-b93192199/)  
-[GitHub](https://github.com/sharmaHarshit2000/)
+**Author: Harshit**
+* LinkedIn: [https://www.linkedin.com/in/harshit-sharma-b93192199/](https://www.linkedin.com/in/harshit-sharma-b93192199/)
+* GitHub: [https://github.com/sharmaHarshit2000/](https://github.com/sharmaHarshit2000/)
 
