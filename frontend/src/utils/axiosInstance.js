@@ -11,7 +11,7 @@ axiosInstance.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Clear token and reload page or redirect to login
       localStorage.removeItem("token");
-      window.location.href = "/login"; // Or use React router navigate if you're inside a component
+      window.location.href = "/login"; 
     }
     return Promise.reject(error);
   }

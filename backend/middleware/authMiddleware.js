@@ -12,28 +12,28 @@ const protect = async (req, res, next) => {
     try {
       // Extract the token from the header
       token = req.headers.authorization.split(" ")[1];
-      console.log("🔐 Token received:", token); // Debug log to check token format
+      console.log("Token received:", token); // Debug log to check token format
 
       // Verify the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("✅ Decoded token:", decoded); // Debug log to check decoded values
+      console.log("Decoded token:", decoded); // Debug log to check decoded values
 
       // Find user by decoded ID
       req.user = await User.findById(decoded.id).select("-password");
 
       if (!req.user) {
-        console.log("❌ User not found");
+        console.log("User not found");
         return res.status(401).json({ message: "User not found" });
       }
 
       // Proceed to next middleware
       next();
     } catch (error) {
-      console.error("❌ JWT verification failed:", error.message); // Debug log to check errors
+      console.error("JWT verification failed:", error.message); // Debug log to check errors
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
   } else {
-    console.warn("⚠️ No token provided");
+    console.warn("No token provided");
     return res.status(401).json({ message: "Not authorized, no token" });
   }
 };

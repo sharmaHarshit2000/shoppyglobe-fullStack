@@ -1,4 +1,3 @@
-// controllers/userController.js
 import User from "../models/User.js";
 
 // Controller to get user information
@@ -21,7 +20,7 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
-// Controller to update user profile (optional)
+// Controller to update user profile 
 export const updateUserProfile = async (req, res) => {
   const { fullName, email, password } = req.body;
 

@@ -23,7 +23,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// ✅ Add this: Create a new product
+// Create a new product
 export const createProduct = async (req, res) => {
   try {
     const product = new Product(req.body);

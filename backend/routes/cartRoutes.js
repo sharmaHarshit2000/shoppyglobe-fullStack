@@ -14,8 +14,8 @@ router.get("/", protect, getCart);
 router.post("/", protect, addToCart);
 router.put("/:productId", protect, updateCartItem);
 
-// 🛠️ FIXED ORDER: static before dynamic
-router.delete("/clear", protect, clearCart);        // 👈 Must be BEFORE :productId
+// static before dynamic
+router.delete("/clear", protect, clearCart);        // Must be BEFORE 
 router.delete("/:productId", protect, removeCartItem);
 
 export default router;

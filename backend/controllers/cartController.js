@@ -1,12 +1,12 @@
 import Product from "../models/Product.js";
 import Cart from "../models/Cart.js";
 
-// @desc    Add product to cart
-// @route   POST /api/cart
-// @access  Private
-// @desc    Add product to cart
-// @route   POST /api/cart
-// @access  Private
+// Add product to cart
+// POST /api/cart
+// Private
+// Add product to cart
+// POST /api/cart
+// Private
 export const addToCart = async (req, res) => {
   const { productId, quantity } = req.body;
 
@@ -54,9 +54,9 @@ export const addToCart = async (req, res) => {
 };
 
 
-// @desc    Update item quantity in cart
-// @route   PUT /api/cart/:productId
-// @access  Private
+// Update item quantity in cart
+// PUT /api/cart/:productId
+// Private
 export const updateCartItem = async (req, res) => {
   const { quantity } = req.body;
   const { productId } = req.params;
@@ -81,9 +81,9 @@ export const updateCartItem = async (req, res) => {
   }
 };
 
-// @desc    Remove item from cart
-// @route   DELETE /api/cart/:productId
-// @access  Private
+// Remove item from cart
+// DELETE /api/cart/:productId
+// Private
 // Remove item from cart with version handling
 export const removeCartItem = async (req, res) => {
   const { productId } = req.params;
@@ -113,7 +113,7 @@ export const removeCartItem = async (req, res) => {
 };
 
 
-// Optional: Get entire cart
+// Get entire cart
 export const getCart = async (req, res) => {
   try {
     // Try to find the user's cart

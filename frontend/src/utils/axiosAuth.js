@@ -1,7 +1,7 @@
 import axios from "./axiosInstance";
 
 const axiosAuth = axios.create({
-  baseURL: "http://localhost:5000/api", // Adjust based on your backend API URL
+  baseURL: "http://localhost:5000/api", // Adjust based on backend API URL
 });
 
 axiosAuth.interceptors.request.use((config) => {

@@ -58,7 +58,7 @@ function ProductDetail() {
                 theme: "colored",
             });
 
-            // ✅ Dispatch event to trigger Header update
+            // Dispatch event to trigger Header update
             window.dispatchEvent(new Event("cartUpdated"));
         } catch (error) {
             console.error("Add to cart error:", error);

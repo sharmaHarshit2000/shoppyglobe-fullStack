@@ -26,7 +26,7 @@ function Checkout() {
                     },
                 });
 
-                setCartItems(response.data.items); // 👈 FIX: only set the array of items
+                setCartItems(response.data.items); // only set the array of items
             } catch (error) {
                 console.error("Failed to fetch cart:", error);
             }
@@ -65,7 +65,7 @@ function Checkout() {
     
             setCartItems([]); // Clear frontend state
     
-            // 🔥 Trigger cart count update in Header
+            // Trigger cart count update in Header
             window.dispatchEvent(new Event("cartUpdated"));
         } catch (error) {
             console.error("Error placing order or clearing cart:", error);
