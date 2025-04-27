@@ -1,6 +1,16 @@
+
+
 # 🛍️ ShoppyGlobe E-commerce App
 
 A full-stack e-commerce app with product listings, cart functionality, and user authentication.
+
+## Table of Contents
+- [Tech Stack](#-tech-stack)
+- [Features](#-features)
+- [MongoDB Integration](#️-mongodb-integration)
+- [ThunderClient + MongoDB Atlas Testing](#-thunderclient--mongodb-atlas-testing)
+- [Folder Structure](#-folder-structure)
+- [Author](#-author)
 
 ## 🚀 Tech Stack
 - **Frontend:** React, Tailwind CSS, Axios, React Router
@@ -14,44 +24,55 @@ A full-stack e-commerce app with product listings, cart functionality, and user 
 - Dynamic cart count & user info
 - Protected checkout route
 
-## 🧪 ThunderClient API Testing
+## 🗄️ MongoDB Integration
+**Database:** `test`
 
-All API endpoints have been tested using ThunderClient. Below are the screenshots:
+**Collections:**
+- `products`: Stores product data (name, price, description, stock)
+- `carts`: Stores cart items (product IDs and quantities)
+- `users`: Stores user authentication data
+
+**CRUD operations implemented for:**
+- **Products:** Create, Read, Update, Delete
+- **Cart Items:** Add to Cart, Update Quantity, Remove Items, Clear Cart
+
+## 🧪 ThunderClient + MongoDB Atlas Testing
+
+All API endpoints were tested using ThunderClient, and results were verified in MongoDB Atlas. Below are the screenshots:
 
 ### Authentication Routes
-| **API Route**               | **Description**              | **Screenshot**                              |
-|-----------------------------|-----------------------------|--------------------------------------------|
-| `POST /api/auth/register`   | Register a new user          | ![Register](./screenshots/auth_register.png) |
-| `POST /api/auth/login`      | User login and get token     | ![Login](./screenshots/auth_login.png)     |
+| **API Route**               | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
+|------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
+| `POST /api/auth/register`    | Register a new user           | ![Register](./screenshots/ThunderClient_ss/auth_register.png) | ![User Created](./screenshots/MongoDB_atlas_ss/user_created.png) |
+| `POST /api/auth/login`       | User login and get token      | ![Login](./screenshots/ThunderClient_ss/auth_login.png)        | ![User Login Check](./screenshots/MongoDB_atlas_ss/user_login_check.png) |
 
 ### Product Routes
-| **API Route**               | **Description**              | **Screenshot**                              |
-|-----------------------------|-----------------------------|--------------------------------------------|
-| `GET /api/products/`        | Fetch all products           | ![All Products](./screenshots/get_all_products.png) |
-| `GET /api/products/:id`     | Fetch a single product       | ![Single Product](./screenshots/get_single_product.png) |
-| `POST /api/products/`       | Create a new product         | ![Create Product](./screenshots/create_product.png) |
+| **API Route**               | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
+|------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
+| `POST /api/products/`        | Create a new product          | ![Create Product](./screenshots/ThunderClient_ss/create_product.png) | ![Product Created](./screenshots/MongoDB_atlas_ss/product_created.png) |
+| `GET /api/products/`         | Fetch all products            | ![Get Products](./screenshots/ThunderClient_ss/get_all_products.png) | ![Products DB](./screenshots/MongoDB_atlas_ss/all_products_db.png) |
+| `GET /api/products/:id`      | Fetch a single product        | ![Single Product](./screenshots/ThunderClient_ss/get_single_product.png) | ![Single Product DB](./screenshots/MongoDB_atlas_ss/single_product_db.png) |
 
 ### Cart Routes
-| **API Route**               | **Description**              | **Screenshot**                              |
-|-----------------------------|-----------------------------|--------------------------------------------|
-| `GET /api/cart/`            | Get user's cart (Protected)  | ![Get Cart](./screenshots/get_cart.png)    |
-| `POST /api/cart/`           | Add product to cart          | ![Add to Cart](./screenshots/add_to_cart.png) |
-| `PUT /api/cart/:productId`  | Update quantity in cart      | ![Update Cart](./screenshots/update_cart_item.png) |
-| `DELETE /api/cart/clear`    | Clear the cart               | ![Clear Cart](./screenshots/clear_cart.png) |
-| `DELETE /api/cart/:productId`| Remove an item from cart     | ![Remove Cart Item](./screenshots/remove_cart_item.png) |
+| **API Route**               | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
+|------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
+| `POST /api/cart/`            | Add product to cart           | ![Add to Cart](./screenshots/ThunderClient_ss/add_to_cart.png) | ![Cart Updated](./screenshots/MongoDB_atlas_ss/cart_updated.png) |
+| `GET /api/cart/`             | Get user's cart (Protected)   | ![Get Cart](./screenshots/ThunderClient_ss/get_cart.png)        | ![Cart DB Check](./screenshots/MongoDB_atlas_ss/cart_db_check.png) |
+| `PUT /api/cart/:productId`   | Update quantity in cart       | ![Update Cart Item](./screenshots/ThunderClient_ss/update_cart_item.png) | ![Update Cart DB](./screenshots/MongoDB_atlas_ss/update_cart_db.png) |
+| `DELETE /api/cart/:productId`| Remove an item from cart      | ![Remove Cart Item](./screenshots/ThunderClient_ss/remove_cart_item.png) | ![Remove Cart DB](./screenshots/MongoDB_atlas_ss/remove_cart_db.png) |
+| `DELETE /api/cart/clear`     | Clear the cart                | ![Clear Cart](./screenshots/ThunderClient_ss/clear_cart.png)     | ![Clear Cart DB](./screenshots/MongoDB_atlas_ss/clear_cart_db.png) |
 
 ### User Routes
-| **API Route**               | **Description**              | **Screenshot**                              |
-|-----------------------------|-----------------------------|--------------------------------------------|
-| `GET /api/user/profile`     | Get logged-in user's profile | ![User Profile](./screenshots/get_user_profile.png) |
-| `PUT /api/user/profile`     | Update user profile          | ![Update Profile](./screenshots/update_user_profile.png) |
+| **API Route**               | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
+|------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
+| `GET /api/user/profile`      | Get logged-in user's profile  | ![User Profile](./screenshots/ThunderClient_ss/get_user_profile.png) | ![User Profile DB](./screenshots/MongoDB_atlas_ss/user_profile_db.png) |
+| `PUT /api/user/profile`      | Update user profile           | ![Update Profile](./screenshots/ThunderClient_ss/update_user_profile.png) | ![Updated User DB](./screenshots/MongoDB_atlas_ss/updated_user_profile_db.png) |
 
 ### Miscellaneous
-| **Test**                    | **Description**              | **Screenshot**                              |
-|-----------------------------|-----------------------------|--------------------------------------------|
-| **Invalid Route**           | Testing Not Found route (`404`) | ![Not Found](./screenshots/not_found_route.png) |
-| **Global Error Handling**   | Testing server-side error handling | ![Global Error](./screenshots/global_error.png) |
-
+| **Test**                    | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
+|------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
+| **Invalid Route**            | Testing Not Found route (`404`) | ![Not Found](./screenshots/ThunderClient_ss/not_found_route.png) | - |
+| **Global Error Handling**    | Testing server-side error handling | ![Global Error](./screenshots/ThunderClient_ss/global_error.png) | - |
 
 ## 🔧 Folder Structure
 
@@ -67,8 +88,12 @@ shoppyglobe/
 │   │   └── userController.js
 │   ├── middleware/
 │   │   ├── authMiddleware.js
-│   │   └── errorMiddleware.js
+│   │   ├── errorMiddleware.js
+│   │   └── notFound.js
 │   ├── models/
+│   │   ├── Cart.js
+│   │   ├── Product.js
+│   │   ├── User.js
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   ├── cartRoutes.js
@@ -121,30 +146,10 @@ shoppyglobe/
 │   └── package-lock.json
 │
 └── README.md
-```
-
-
-
-## 📦 Installation
-
-git clone https://github.com/sharmaHarshit2000/shoppyglobe-fullStack.git
-cd shoppyglobe-fullStack
-
-```bash
-# Frontend
-cd frontend
-npm install
-npm run dev
-
-# Backend
-cd backend
-npm install
-npm start
 
 ```
-
 ## 👤 Author
+**Harshit Sharma**
 
-Harshit – 
-•LinkedIn https://www.linkedin.com/in/harshit-sharma-b93192199/  
-•GitHub  https://github.com/sharmaHarshit2000
+- [LinkedIn](https://www.linkedin.com/in/harshit-sharma-b93192199/)
+- [GitHub](https://github.com/sharmaHarshit2000)
