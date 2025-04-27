@@ -13,16 +13,19 @@ function Signup() {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
+  // Password validation function: checks for length, uppercase, lowercase, number, and special character
   const validatePassword = (pwd) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
     return regex.test(pwd);
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setPasswordError("");
 
+    // Validate password strength before sending to server
     if (!validatePassword(password)) {
       setPasswordError(
         "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
@@ -31,19 +34,23 @@ function Signup() {
     }
 
     try {
+      // API call to register a new user
       await axios.post("/auth/register", {
         fullName: name,
         email,
         password,
       });
 
+      // Show success toast on successful account creation
       toast.success("Account created successfully!", {
         position: "top-center",
         autoClose: 2500,
       });
 
+      // Redirect user to login page after slight delay
       setTimeout(() => navigate("/login"), 2500);
     } catch (err) {
+      // Handle and show API error message
       const message = err.response?.data?.message || "Signup failed";
       setError(message);
       toast.error(message, {
@@ -60,6 +67,7 @@ function Signup() {
           Create an Account
         </h2>
 
+        {/* Error message display */}
         {error && (
           <div className="text-red-600 text-sm text-center mb-4 font-medium bg-red-100 border border-red-300 p-2 rounded transition-all duration-300">
             {error}
@@ -67,6 +75,7 @@ function Signup() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Full Name Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Full Name
@@ -77,10 +86,11 @@ function Signup() {
               onChange={(e) => setName(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
-              placeholder="John Doe"
+              placeholder="Harshit Sharma"
             />
           </div>
 
+          {/* Email Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
@@ -91,10 +101,11 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
-              placeholder="you@example.com"
+              placeholder="abc@gmail.com"
             />
           </div>
 
+          {/* Password Input with show/hide toggle */}
           <div className="relative">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
@@ -107,12 +118,15 @@ function Signup() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800 pr-10"
               placeholder="••••••••"
             />
+            {/* Toggle password visibility */}
             <div
               className="absolute right-3 top-[42px] transform -translate-y-1/2 cursor-pointer text-gray-500"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
             </div>
+
+            {/* Show password error if validation fails */}
             {passwordError && (
               <p className="mt-2 text-xs text-red-600 bg-red-50 border border-red-200 p-2 rounded-md font-medium transition-all duration-300">
                 {passwordError}
@@ -120,6 +134,7 @@ function Signup() {
             )}
           </div>
 
+          {/* Signup Button */}
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-sm"
@@ -128,6 +143,7 @@ function Signup() {
           </button>
         </form>
 
+        {/* Link to Login Page */}
         <p className="text-sm text-center text-gray-600 mt-5">
           Already have an account?{" "}
           <Link

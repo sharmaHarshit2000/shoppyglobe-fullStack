@@ -4,23 +4,26 @@ import { toast } from "react-toastify";
 import axios from "../../utils/axiosInstance";
 
 function ProductItem({ product }) {
+  // Function to handle adding product to the cart
   const handleAddToCart = async () => {
     try {
+      // Check if user is logged in by verifying if the token exists in localStorage
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("Please login to add items to your cart.");
         return;
       }
 
+      // Sending a request to add the product to the user's cart
       await axios.post(
         "http://localhost:5000/api/cart",
         {
           productId: product._id,
-          quantity: 1,
+          quantity: 1, // Default quantity set to 1 for simplicity
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Include JWT token in the request header
           },
         }
       );
@@ -31,6 +34,7 @@ function ProductItem({ product }) {
         theme: "colored",
       });
 
+      // Dispatch an event to trigger an update in the cart icon/header
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error("Add to cart error:", error);
@@ -38,6 +42,7 @@ function ProductItem({ product }) {
     }
   };
 
+  // Calculating the original price after discount
   const discountPercentage = product.discountPercentage || 0;
   const originalPrice = (
     product.price /
@@ -53,6 +58,7 @@ function ProductItem({ product }) {
             alt={product.title}
             className="w-full h-52 object-cover rounded-lg mb-4 transition-transform duration-300 hover:scale-105"
           />
+          {/* Display discount label if there is a discount */}
           {discountPercentage > 0 && (
             <span className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 text-xs font-semibold rounded-full shadow-md">
               {discountPercentage}% OFF
@@ -64,6 +70,7 @@ function ProductItem({ product }) {
           {product.title}
         </h2>
 
+        {/* Display category and brand */}
         <div className="flex flex-wrap gap-2 mt-2">
           <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
             {product.category}
@@ -75,6 +82,7 @@ function ProductItem({ product }) {
           )}
         </div>
 
+        {/* Display star ratings */}
         {product.rating && (
           <div className="flex items-center gap-1 mt-2 text-yellow-500 text-sm">
             {[...Array(5)].map((_, i) => (
@@ -89,8 +97,10 @@ function ProductItem({ product }) {
           </div>
         )}
 
+        {/* Price and stock status */}
         <div className="flex justify-between items-start mt-4">
           <div>
+            {/* If discount exists, show the original price as a strike-through */}
             {discountPercentage > 0 && (
               <p className="text-gray-400 text-sm line-through">
                 ${originalPrice}
@@ -98,6 +108,7 @@ function ProductItem({ product }) {
             )}
             <p className="text-green-600 text-xl font-bold">${product.price}</p>
           </div>
+          {/* Show stock status (in stock or limited stock) */}
           <span
             className={`text-xs font-medium px-2 py-1 rounded-full ${
               product.stock > 10
@@ -110,7 +121,7 @@ function ProductItem({ product }) {
         </div>
       </Link>
 
-      {/* Always aligned button */}
+      {/* Button to add to cart */}
       <button
         onClick={handleAddToCart}
         className="mt-5 w-full bg-blue-600 text-white py-3 rounded-xl flex items-center justify-center gap-2 text-base font-semibold hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-md"

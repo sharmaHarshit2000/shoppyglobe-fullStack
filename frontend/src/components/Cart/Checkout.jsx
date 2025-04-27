@@ -5,6 +5,8 @@ import { useAuth } from "../../context/AuthContext";
 
 function Checkout() {
     const { token } = useAuth();
+
+    // Local states to store cart items, order status, and form data
     const [cartItems, setCartItems] = useState([]);
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ function Checkout() {
         paymentMethod: "Credit Card",
     });
 
-    // Fetch cart data from backend
+    // Fetch cart data from backend when component mounts or token changes
     useEffect(() => {
         const fetchCart = async () => {
             try {
@@ -26,7 +28,7 @@ function Checkout() {
                     },
                 });
 
-                setCartItems(response.data.items); // only set the array of items
+                setCartItems(response.data.items); // Save only items array to state
             } catch (error) {
                 console.error("Failed to fetch cart:", error);
             }
@@ -35,50 +37,53 @@ function Checkout() {
         if (token) fetchCart();
     }, [token]);
 
-
+    // Calculate total price dynamically based on cart items
     const totalPrice = cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
         0
     );
 
+    // Handle changes in the form inputs
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Handle form submission (placing order)
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        // Validation: Check if all fields are filled
         if (Object.values(formData).some((field) => field.trim() === "")) {
             alert("Please fill all fields before placing the order");
             return;
         }
-    
+
         try {
-            setOrderPlaced(true); // Show success message
-    
-            // Clear cart in backend
+            setOrderPlaced(true); // Show success message immediately
+
+            // Clear cart data on backend
             await axios.delete("http://localhost:5000/api/cart/clear", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-    
-            setCartItems([]); // Clear frontend state
-    
-            // Trigger cart count update in Header
+
+            setCartItems([]); // Clear cart items from frontend state
+
+            // Dispatch a custom event to update cart icon count in header
             window.dispatchEvent(new Event("cartUpdated"));
         } catch (error) {
             console.error("Error placing order or clearing cart:", error);
             alert("Failed to place order or clear cart.");
         }
     };
-    
-    
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-10 px-4">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-4xl font-extrabold text-center mb-10 text-blue-700">🛒 Checkout</h2>
 
+                {/* If order is placed, show success message, else show form */}
                 {orderPlaced ? (
                     <div className="text-center bg-green-100 p-10 rounded-2xl shadow-xl">
                         <h3 className="text-3xl font-bold text-green-700 mb-4">Order Successfully Placed!</h3>
@@ -88,9 +93,11 @@ function Checkout() {
                 ) : (
                     <div className="bg-white shadow-xl rounded-2xl p-8">
                         <h3 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Shipping Information</h3>
+                        
+                        {/* Shipping Form */}
                         <form onSubmit={handleSubmit} className="space-y-5">
 
-                            {/* Name */}
+                            {/* Name input */}
                             <input
                                 type="text"
                                 name="name"
@@ -101,7 +108,7 @@ function Checkout() {
                                 required
                             />
 
-                            {/* Email */}
+                            {/* Email input */}
                             <input
                                 type="email"
                                 name="email"
@@ -112,7 +119,7 @@ function Checkout() {
                                 required
                             />
 
-                            {/* Address */}
+                            {/* Address input */}
                             <input
                                 type="text"
                                 name="address"
@@ -123,7 +130,7 @@ function Checkout() {
                                 required
                             />
 
-                            {/* City and Zip Code */}
+                            {/* City and Zip input */}
                             <div className="flex gap-4">
                                 <input
                                     type="text"
@@ -146,7 +153,7 @@ function Checkout() {
                                 />
                             </div>
 
-                            {/* Payment Method Selection */}
+                            {/* Payment method selection */}
                             <h3 className="text-xl font-semibold mt-6 text-gray-700">💳 Payment Method</h3>
                             <div className="flex items-center space-x-4">
 
@@ -178,7 +185,7 @@ function Checkout() {
                                     Paypal
                                 </label>
 
-                                {/* Cash Option */}
+                                {/* Cash on Delivery Option */}
                                 <label className={`flex items-center cursor-pointer border p-3 rounded-lg w-1/3 bg-gray-100 hover:bg-blue-100 transition ${formData.paymentMethod === "Cash on delivery" ? "ring-2 ring-blue-500" : ""}`}>
                                     <FaMoneyBillWaveAlt className="text-blue-600 text-xl mr-2" />
                                     <input
@@ -193,7 +200,7 @@ function Checkout() {
                                 </label>
                             </div>
 
-                            {/* Order Summary */}
+                            {/* Order Summary Section */}
                             <h3 className="text-2xl font-semibold mt-8 mb-4 text-gray-800">🧾 Order Summary</h3>
                             <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
                                 {cartItems.map((item) => (
@@ -210,7 +217,7 @@ function Checkout() {
                                 <span>${totalPrice.toFixed(2)}</span>
                             </div>
 
-                            {/* Submit Order Button */}
+                            {/* Place Order Button */}
                             <button
                                 type="submit"
                                 className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition duration-300 text-lg font-semibold shadow-md hover:scale-[1.02]"

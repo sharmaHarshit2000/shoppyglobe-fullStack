@@ -9,6 +9,7 @@ import cartRoutes from "./routes/cartRoutes.js";
 import userRoutes from "./routes/userRoutes.js"; 
 
 import errorHandler from "./middleware/errorMiddleware.js";
+import notFound from "./middleware/notFound.js";
 
 dotenv.config();
 const app = express();
@@ -26,9 +27,13 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/user", userRoutes); 
 
+// Check the backend is working or not
 app.get("/api/test", (req, res) => {
   res.json({ message: "Backend is working" });
 });
+
+//Not Found Middleware
+app.use(notFound);
 
 // Error Middleware
 app.use(errorHandler);

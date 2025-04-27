@@ -38,6 +38,7 @@ function Header() {
   return (
     <header className="bg-gradient-to-r from-blue-900 to-indigo-800 text-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center relative">
+        {/* Logo */}
         <Link
           to="/"
           className="text-3xl md:text-4xl font-extrabold tracking-wide hover:scale-105 transform transition duration-300"
@@ -45,6 +46,7 @@ function Header() {
           Shoopy<span className="text-yellow-400">Globe</span>
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-10 text-lg font-medium">
           <Link to="/" className="flex items-center gap-2 hover:text-yellow-300 transition">
             <FaHome /> Home
@@ -83,6 +85,7 @@ function Header() {
           )}
         </nav>
 
+        {/* Hamburger Icon for Mobile */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden text-3xl transition-transform duration-300 focus:outline-none"
@@ -93,8 +96,9 @@ function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden transition-all duration-300 bg-white text-gray-800 rounded-b-xl shadow-lg ${isMenuOpen ? "max-h-52 opacity-100 py-4 px-6" : "max-h-0 opacity-0 overflow-hidden"
-          }`}
+        className={`md:hidden transition-all duration-300 bg-white text-gray-800 rounded-b-xl shadow-lg ${
+          isMenuOpen ? "max-h-52 opacity-100 py-4 px-6" : "max-h-0 opacity-0 overflow-hidden"
+        }`}
       >
         <div className="flex flex-col gap-4">
           <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2 hover:text-blue-700 text-lg font-medium">

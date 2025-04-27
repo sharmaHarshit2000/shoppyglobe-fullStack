@@ -12,11 +12,11 @@ const protect = async (req, res, next) => {
     try {
       // Extract the token from the header
       token = req.headers.authorization.split(" ")[1];
-      console.log("Token received:", token); // Debug log to check token format
+      console.log("Token received:", token); // Check token format
 
       // Verify the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded token:", decoded); // Debug log to check decoded values
+      console.log("Decoded token:", decoded); // Check decoded values
 
       // Find user by decoded ID
       req.user = await User.findById(decoded.id).select("-password");
@@ -29,7 +29,7 @@ const protect = async (req, res, next) => {
       // Proceed to next middleware
       next();
     } catch (error) {
-      console.error("JWT verification failed:", error.message); // Debug log to check errors
+      console.error("JWT verification failed:", error.message); // Check errors
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
   } else {

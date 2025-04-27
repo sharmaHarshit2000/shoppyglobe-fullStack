@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
   // React to token updates
   useEffect(() => {
     if (!token) {
-      setCartCount(0); // immediately clear on logout
+      setCartCount(0); // Clear on logout
     } else {
       fetchCartCount(); // fetch on login
     }

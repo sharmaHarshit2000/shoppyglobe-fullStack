@@ -6,9 +6,11 @@ function ProtectedRoute({ element }) {
   const location = useLocation();
 
   if (!isAuthenticated) {
+    // If not authenticated, redirect to login and remember the page they tried to visit
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // If authenticated, allow access to the requested element
   return element;
 }
 

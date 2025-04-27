@@ -10,12 +10,13 @@ import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// Protect middleware for Cart Routes
 router.get("/", protect, getCart);
 router.post("/", protect, addToCart);
 router.put("/:productId", protect, updateCartItem);
 
-// static before dynamic
-router.delete("/clear", protect, clearCart);        // Must be BEFORE 
+// Static before dynamic routes
+router.delete("/clear", protect, clearCart);       
 router.delete("/:productId", protect, removeCartItem);
 
 export default router;

@@ -1,20 +1,29 @@
 import axios from "axios";
 
+// Create a custom axios instance for making API requests
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://localhost:5000/api", // Base URL for backend API
 });
 
-// Add interceptor to handle 401
+// Add a response interceptor to handle errors globally
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => response, // If the response is successful, just return it
   (error) => {
+    // If the server responds with an error
     if (error.response && error.response.status === 401) {
-      // Clear token and reload page or redirect to login
+      // If error status is 401 (Unauthorized)
+
+      // Clear the stored token from localStorage (because it's invalid/expired)
       localStorage.removeItem("token");
-      window.location.href = "/login"; 
+
+      // Redirect the user to the login page
+      window.location.href = "/login";
     }
+
+    // Reject the error 
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;

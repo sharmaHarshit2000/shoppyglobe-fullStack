@@ -1,6 +1,6 @@
-// models/User.js
 import mongoose from "mongoose";
 
+// Regex to enforce strong password rules
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
 const userSchema = new mongoose.Schema({
@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
+    // Validate email format using regex
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please enter a valid email address",
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Password is required"],
+    // Custom validator function for strong password checking
     validate: {
       validator: function (value) {
         return passwordRegex.test(value);
