@@ -16,29 +16,41 @@ A full-stack e-commerce app with product listings, cart functionality, and user 
 
 ## 🧪 ThunderClient API Testing
 
-All API endpoints have been tested using ThunderClient.  
-Below are the screenshots:
+All API endpoints have been tested using ThunderClient. Below are the screenshots:
 
-| API Route                    | Test Description             | Screenshot |
-|:-----------------------------|:-----------------------------|:----------:|
-| `POST /api/auth/register`    | Register a new user          | ![Register](./screenshots/auth_register.png) |
-| `POST /api/auth/login`       | User login and get token     | ![Login](./screenshots/auth_login.png) |
+### Authentication Routes
+| **API Route**               | **Description**              | **Screenshot**                              |
+|-----------------------------|-----------------------------|--------------------------------------------|
+| `POST /api/auth/register`   | Register a new user          | ![Register](./screenshots/auth_register.png) |
+| `POST /api/auth/login`      | User login and get token     | ![Login](./screenshots/auth_login.png)     |
 
-| `GET /api/products/`         | Fetch all products           | ![All Products](./screenshots/get_all_products.png) |
-| `GET /api/products/:id`      | Fetch a single product       | ![Single Product](./screenshots/get_single_product.png) |
-| `POST /api/products/`         | Create a new product        | ![Create Product](./screenshots/create_product.png) |
+### Product Routes
+| **API Route**               | **Description**              | **Screenshot**                              |
+|-----------------------------|-----------------------------|--------------------------------------------|
+| `GET /api/products/`        | Fetch all products           | ![All Products](./screenshots/get_all_products.png) |
+| `GET /api/products/:id`     | Fetch a single product       | ![Single Product](./screenshots/get_single_product.png) |
+| `POST /api/products/`       | Create a new product         | ![Create Product](./screenshots/create_product.png) |
 
-| `GET /api/cart/`             | Get user's cart (Protected)  | ![Get Cart](./screenshots/get_cart.png) |
-| `POST /api/cart/`            | Add product to cart          | ![Add to Cart](./screenshots/add_to_cart.png) |
-| `PUT /api/cart/:productId`   | Update quantity in cart      | ![Update Cart](./screenshots/update_cart_item.png) |
-| `DELETE /api/cart/clear`     | Clear the cart               | ![Clear Cart](./screenshots/clear_cart.png) |
+### Cart Routes
+| **API Route**               | **Description**              | **Screenshot**                              |
+|-----------------------------|-----------------------------|--------------------------------------------|
+| `GET /api/cart/`            | Get user's cart (Protected)  | ![Get Cart](./screenshots/get_cart.png)    |
+| `POST /api/cart/`           | Add product to cart          | ![Add to Cart](./screenshots/add_to_cart.png) |
+| `PUT /api/cart/:productId`  | Update quantity in cart      | ![Update Cart](./screenshots/update_cart_item.png) |
+| `DELETE /api/cart/clear`    | Clear the cart               | ![Clear Cart](./screenshots/clear_cart.png) |
 | `DELETE /api/cart/:productId`| Remove an item from cart     | ![Remove Cart Item](./screenshots/remove_cart_item.png) |
 
-| `GET /api/user/profile`      | Get logged-in user's profile | ![User Profile](./screenshots/get_user_profile.png) |
-| `PUT /api/user/profile`      | Update user profile          | ![Update Profile](./screenshots/update_user_profile.png) |
+### User Routes
+| **API Route**               | **Description**              | **Screenshot**                              |
+|-----------------------------|-----------------------------|--------------------------------------------|
+| `GET /api/user/profile`     | Get logged-in user's profile | ![User Profile](./screenshots/get_user_profile.png) |
+| `PUT /api/user/profile`     | Update user profile          | ![Update Profile](./screenshots/update_user_profile.png) |
 
----
-
+### Miscellaneous
+| **Test**                    | **Description**              | **Screenshot**                              |
+|-----------------------------|-----------------------------|--------------------------------------------|
+| **Invalid Route**           | Testing Not Found route (`404`) | ![Not Found](./screenshots/not_found_route.png) |
+| **Global Error Handling**   | Testing server-side error handling | ![Global Error](./screenshots/global_error.png) |
 
 
 ## 🔧 Folder Structure
