@@ -10,6 +10,7 @@ A full-stack e-commerce app with product listings, cart functionality, and user 
 - [MongoDB Integration](#️-mongodb-integration)
 - [ThunderClient + MongoDB Atlas Testing](#-thunderclient--mongodb-atlas-testing)
 - [Folder Structure](#-folder-structure)
+- [Installation](#-installation)
 - [Author](#-author)
 
 ## 🚀 Tech Stack
@@ -56,11 +57,11 @@ All API endpoints were tested using ThunderClient, and results were verified in 
 ### Cart Routes
 | **API Route**               | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
 |------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
-| `POST /api/cart/`            | Add product to cart           | ![Add to Cart](./screenshots/ThunderClient_ss/add_to_cart.png) | ![Cart Updated](./screenshots/MongoDB_atlas_ss/cart_updated.png) |
+| `POST /api/cart/`            | Add product to cart (Protected) | ![Add to Cart](./screenshots/ThunderClient_ss/add_to_cart.png) | ![Cart Updated](./screenshots/MongoDB_atlas_ss/cart_updated.png) |
 | `GET /api/cart/`             | Get user's cart (Protected)   | ![Get Cart](./screenshots/ThunderClient_ss/get_cart.png)        | ![Cart DB Check](./screenshots/MongoDB_atlas_ss/cart_db_check.png) |
-| `PUT /api/cart/:productId`   | Update quantity in cart       | ![Update Cart Item](./screenshots/ThunderClient_ss/update_cart_item.png) | ![Update Cart DB](./screenshots/MongoDB_atlas_ss/update_cart_db.png) |
-| `DELETE /api/cart/:productId`| Remove an item from cart      | ![Remove Cart Item](./screenshots/ThunderClient_ss/remove_cart_item.png) | ![Remove Cart DB](./screenshots/MongoDB_atlas_ss/remove_cart_db.png) |
-| `DELETE /api/cart/clear`     | Clear the cart                | ![Clear Cart](./screenshots/ThunderClient_ss/clear_cart.png)     | ![Clear Cart DB](./screenshots/MongoDB_atlas_ss/clear_cart_db.png) |
+| `PUT /api/cart/:productId`   | Update quantity in cart (Protected) | ![Update Cart Item](./screenshots/ThunderClient_ss/update_cart_item.png) | ![Update Cart DB](./screenshots/MongoDB_atlas_ss/update_cart_db.png) |
+| `DELETE /api/cart/:productId`| Remove an item from cart (Protected) | ![Remove Cart Item](./screenshots/ThunderClient_ss/remove_cart_item.png) | ![Remove Cart DB](./screenshots/MongoDB_atlas_ss/remove_cart_db.png) |
+| `DELETE /api/cart/clear`     | Clear the cart (Protected)    | ![Clear Cart](./screenshots/ThunderClient_ss/clear_cart.png)     | ![Clear Cart DB](./screenshots/MongoDB_atlas_ss/clear_cart_db.png) |
 
 ### User Routes
 | **API Route**               | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
@@ -69,10 +70,11 @@ All API endpoints were tested using ThunderClient, and results were verified in 
 | `PUT /api/user/profile`      | Update user profile           | ![Update Profile](./screenshots/ThunderClient_ss/update_user_profile.png) | ![Updated User DB](./screenshots/MongoDB_atlas_ss/updated_user_profile_db.png) |
 
 ### Miscellaneous
-| **Test**                    | **Description**              | **ThunderClient Screenshot**             | **MongoDB Atlas Screenshot**             |
-|------------------------------|-------------------------------|-------------------------------------------|-------------------------------------------|
-| **Invalid Route**            | Testing Not Found route (`404`) | ![Not Found](./screenshots/ThunderClient_ss/not_found_route.png) | - |
-| **Global Error Handling**    | Testing server-side error handling | ![Global Error](./screenshots/ThunderClient_ss/global_error.png) | - |
+| **Test**                    | **Description**              | **ThunderClient Screenshot**             |
+|------------------------------|-------------------------------|-------------------------------------------|
+| **Invalid Route**            | Testing Not Found route (`404`) | ![Not Found](./screenshots/ThunderClient_ss/not_found_route.png) |
+| **Global Error Handling**    | Testing server-side error handling | ![Global Error](./screenshots/ThunderClient_ss/global_error.png) |
+
 
 ## 🔧 Folder Structure
 
@@ -148,6 +150,32 @@ shoppyglobe/
 └── README.md
 
 ```
+
+## 📦 Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sharmaHarshit2000/shoppyglobe-fullStack.git
+   cd shoppyglobe-fullStack
+   ```
+
+2. Install dependencies for the backend:
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+
+3. Install dependencies for the frontend:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+4. Open the app in your browser at `http://localhost:5173`.
+
+
 ## 👤 Author
 **Harshit Sharma**
 
