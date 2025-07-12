@@ -1,21 +1,17 @@
-import axios from "./axiosInstance";
+import axiosInstance from "./axiosInstance"; 
 
-// Create a new axios instance 
-const axiosAuth = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // Base URL for backend API
-});
 
-// Add a request interceptor to automatically attach the Authorization token
+const axiosAuth = axiosInstance; 
+
+// Add Authorization header via request interceptor
 axiosAuth.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+  const token = localStorage.getItem("token");
 
   if (token) {
-    // If a token exists, add it to the request headers
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return config; // Return the modified config
+  return config;
 });
-
 
 export default axiosAuth;

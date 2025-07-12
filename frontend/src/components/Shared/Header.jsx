@@ -14,8 +14,7 @@ function Header() {
 
   const handleLogout = () => {
     logout();
-    fetchCartCount(); // Reset cart count on logout
-    navigate("/login");
+      navigate("/login");
   };
 
   useEffect(() => {

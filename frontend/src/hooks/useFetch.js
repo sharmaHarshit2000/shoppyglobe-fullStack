@@ -1,35 +1,39 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../utils/axiosInstance"; 
 
-function useFetch(apiUrl) {
-  //define loading, error and data as state variable
+function useFetch(url) {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [data, setData] = useState({ products: [] });
 
   useEffect(() => {
-    async function fetchData() {
-      //if get data set in data
+    let isMounted = true;
+
+    const fetchData = async () => {
       try {
-        const res = await fetch(apiUrl);
-        const result = await res.json();
-        setData(result);
-        //if get error set in error
+        const response = await axios.get(url); 
+        if (isMounted) {
+          setData(response.data);
+          setError(null);
+        }
       } catch (err) {
-        setError(err.message);
-        //after got data or error set loading as false
+        if (isMounted) {
+          setError(err.message || "An error occurred");
+          setData(null);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-    //give depedecy array  as apiUrl if change url run useEffect again
-  }, [apiUrl]);
+    fetchData();
 
-  //return the loading, error, data
-  return {loading, error, data}
+    return () => {
+      isMounted = false;
+    };
+  }, [url]);
+
+  return { data, loading, error };
 }
-
 
 export default useFetch;

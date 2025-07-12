@@ -22,7 +22,7 @@ function Checkout() {
     useEffect(() => {
         const fetchCart = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/api/cart", {
+                const response = await axios.get("/cart", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -62,7 +62,7 @@ function Checkout() {
             setOrderPlaced(true); // Show success message immediately
 
             // Clear cart data on backend
-            await axios.delete("http://localhost:5000/api/cart/clear", {
+            await axios.delete("/cart/clear", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -93,7 +93,7 @@ function Checkout() {
                 ) : (
                     <div className="bg-white shadow-xl rounded-2xl p-8">
                         <h3 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Shipping Information</h3>
-                        
+
                         {/* Shipping Form */}
                         <form onSubmit={handleSubmit} className="space-y-5">
 

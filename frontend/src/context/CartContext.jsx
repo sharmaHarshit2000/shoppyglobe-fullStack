@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "../utils/axiosInstance";
+import axiosAuth from "../utils/axiosAuth"; 
 import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const { token } = useAuth(); // react to token updates
+  const { token } = useAuth();
   const [cartCount, setCartCount] = useState(0);
 
   const fetchCartCount = async () => {
@@ -15,9 +15,7 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      const res = await axios.get("http://localhost:5000/api/cart", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axiosAuth.get("/cart");
       setCartCount(res.data.items.length || 0);
     } catch (error) {
       console.error("Failed to fetch cart count:", error);
@@ -25,19 +23,17 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // React to token updates
   useEffect(() => {
     if (!token) {
-      setCartCount(0); // Clear on logout
+      setCartCount(0);
     } else {
-      fetchCartCount(); // fetch on login
+      fetchCartCount();
     }
   }, [token]);
 
-  // Event-based cart updates
   useEffect(() => {
     const handleCartUpdate = () => {
-      fetchCartCount(); // Fetch updated cart count
+      fetchCartCount();
     };
     window.addEventListener("cartUpdated", handleCartUpdate);
     return () => {
@@ -48,14 +44,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (item) => {
     if (!token) return;
     try {
-      await axios.post(
-        "http://localhost:5000/api/cart",
-        { item },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      // Dispatch the cartUpdated event to notify other parts of the app
+      await axiosAuth.post("/cart", { item });
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error("Add to cart failed:", error);
@@ -65,10 +54,7 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = async (itemId) => {
     if (!token) return;
     try {
-      await axios.delete(`http://localhost:5000/api/cart/${itemId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      // Dispatch the cartUpdated event to notify other parts of the app
+      await axiosAuth.delete(`/cart/${itemId}`);
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error("Remove from cart failed:", error);

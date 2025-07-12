@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "../utils/axiosInstance";
+import axiosAuth from "../utils/axiosAuth"; 
 
 const AuthContext = createContext();
 
@@ -13,20 +13,18 @@ export const AuthProvider = ({ children }) => {
     if (storedToken) {
       setToken(storedToken);
     }
-  }, []);;
+  }, []);
 
-  // Fetch user data from backend
+  // Fetch user profile
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
         try {
-          const res = await axios.get("http://localhost:5000/api/user/profile", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(res.data); // Set the user data from response
+          const res = await axiosAuth.get("/user/profile");
+          setUser(res.data);
         } catch (error) {
           console.error("Error fetching user:", error);
-          setUser(null); // Clear user data on error
+          setUser(null);
         }
       }
     };
@@ -42,14 +40,15 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-  
     setUser(null);
   };
 
   const isAuthenticated = !!token;
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ token, user, login, logout, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );

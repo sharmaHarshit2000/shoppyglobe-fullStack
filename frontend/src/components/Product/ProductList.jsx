@@ -5,8 +5,10 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 
 function ProductList() {
   // Fetching product data using a custom hook
-  const { loading, error, data } = useFetch("http://localhost:5000/api/products");
-  
+  const { loading, error, data } = useFetch(
+    `${import.meta.env.VITE_API_BASE_URL}/products`
+  );
+
   // State for managing the search query
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -72,7 +74,7 @@ function ProductList() {
         // Render filtered product 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredProducts.map((product) => (
-            <ProductItem key={product._id || product.id} product={product} /> 
+            <ProductItem key={product._id || product.id} product={product} />
           ))}
         </div>
       )}
