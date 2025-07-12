@@ -1,9 +1,17 @@
 import express from "express";
 import { body, validationResult } from "express-validator";
-import { addToCart, updateCartItem, removeCartItem, getCart, clearCart } from "../controllers/cartController.js";
+import {
+  addToCart,
+  updateCartItem,
+  removeCartItem,
+  getCart,
+  clearCart,
+} from "../controllers/cartController.js";
 import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+router.get("/", protect, getCart);
 
 // POST: Add product to cart
 router.post(
@@ -11,7 +19,9 @@ router.post(
   [
     // Validate that productId is a valid MongoDB ObjectId and quantity is a positive integer
     body("productId").isMongoId().withMessage("Invalid product ID"),
-    body("quantity").isInt({ min: 1 }).withMessage("Quantity must be at least 1"),
+    body("quantity")
+      .isInt({ min: 1 })
+      .withMessage("Quantity must be at least 1"),
   ],
   protect,
   async (req, res, next) => {
@@ -31,7 +41,9 @@ router.post(
 router.put(
   "/:productId",
   [
-    body("quantity").isInt({ min: 1 }).withMessage("Quantity must be at least 1"),
+    body("quantity")
+      .isInt({ min: 1 })
+      .withMessage("Quantity must be at least 1"),
   ],
   protect,
   async (req, res, next) => {
