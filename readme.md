@@ -1,5 +1,3 @@
-
-
 # 🛍️ ShoppyGlobe E-commerce App
 
 A full-stack e-commerce app with product listings, cart functionality, and user authentication.
@@ -10,7 +8,9 @@ A full-stack e-commerce app with product listings, cart functionality, and user 
 - [MongoDB Integration](#️-mongodb-integration)
 - [ThunderClient + MongoDB Atlas Testing](#-thunderclient--mongodb-atlas-testing)
 - [Folder Structure](#-folder-structure)
+- [Environment Variables](#-environment-variables)
 - [Installation](#-installation)
+- [Deployment](#-deployment)
 - [Author](#-author)
 
 ## 🚀 Tech Stack
@@ -151,6 +151,27 @@ shoppyglobe/
 
 ```
 
+## 🔧 Environment Variables
+
+### 🔒 Backend `.env`
+Create a `.env` file inside the `backend/` folder:
+
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=<your-mongodb-connection-string>
+JWT_SECRET=<your-secret-key>
+```
+📌 **Note:** Replace `<your-mongodb-connection-string>` and `<your-secret-key>` with your actual values.
+
+### 🌐 Frontend `.env`
+Create a `.env` file inside the `frontend/` folder:
+
+```env
+VITE_API_BASE_URL=https://shoppyglobe-fullstack-yy0k.onrender.com/api
+```
+Make sure this value matches your deployed backend API URL or use `http://localhost:5000/api` for local development.
+
 ## 📦 Installation
 
 1. Clone the repository:
@@ -175,6 +196,10 @@ shoppyglobe/
 
 4. Open the app in your browser at `http://localhost:5173`.
 
+## 🚀 Deployment
+
+- **Frontend:** [https://shoppyglobe-full-stack.vercel.app/](https://shoppyglobe-full-stack.vercel.app/)
+- **Backend:** [https://shoppyglobe-fullstack-yy0k.onrender.com/](https://shoppyglobe-fullstack-yy0k.onrender.com/)
 
 ## 👤 Author
 **Harshit Sharma**
