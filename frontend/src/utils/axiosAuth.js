@@ -2,7 +2,7 @@ import axios from "./axiosInstance";
 
 // Create a new axios instance 
 const axiosAuth = axios.create({
-  baseURL: "http://localhost:5000/api", // Base URL for backend API
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Base URL for backend API
 });
 
 // Add a request interceptor to automatically attach the Authorization token

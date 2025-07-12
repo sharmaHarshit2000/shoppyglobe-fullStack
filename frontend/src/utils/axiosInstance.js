@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create a custom axios instance for making API requests
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api", // Base URL for backend API
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Base URL for backend API
 });
 
 // Add a response interceptor to handle errors globally
@@ -20,10 +20,9 @@ axiosInstance.interceptors.response.use(
       window.location.href = "/login";
     }
 
-    // Reject the error 
+    // Reject the error
     return Promise.reject(error);
   }
 );
-
 
 export default axiosInstance;

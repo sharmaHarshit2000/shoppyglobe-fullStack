@@ -28,7 +28,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/user", userRoutes); 
 
 // Check the backend is working or not
-app.get("/api/test", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "Backend is working" });
 });
 
